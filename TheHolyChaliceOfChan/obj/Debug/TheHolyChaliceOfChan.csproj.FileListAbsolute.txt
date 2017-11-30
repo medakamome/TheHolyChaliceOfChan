@@ -1,0 +1,9 @@
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\bin\Debug\TheHolyChaliceOfChan.exe.config
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\obj\Debug\TheHolyChaliceOfChan.csprojResolveAssemblyReference.cache
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\obj\Debug\TheHolyChaliceOfChan.Form1.resources
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\obj\Debug\TheHolyChaliceOfChan.Properties.Resources.resources
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\obj\Debug\TheHolyChaliceOfChan.csproj.GenerateResource.Cache
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\bin\Debug\TheHolyChaliceOfChan.exe
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\bin\Debug\TheHolyChaliceOfChan.pdb
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\obj\Debug\TheHolyChaliceOfChan.exe
+E:\workspace\applications\TheHolyChaliceOfChan\TheHolyChaliceOfChan\obj\Debug\TheHolyChaliceOfChan.pdb
