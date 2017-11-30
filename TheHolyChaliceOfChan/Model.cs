@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TheHolyChaliceOfChan
@@ -49,15 +50,15 @@ namespace TheHolyChaliceOfChan
             //    { "ポンド円","GBPJPY" },
             //    { "NZドル円","NZDUSD" },
             //    { "ユーロドル","USDEUR" } };
-
-            string[] lines = Text.Replace("\r\n","!").Split('!');
+            Regex reg = new Regex(" +");
+            string[] lines = reg.Replace(Text.Replace("　", " "), " ").Replace("\r\n","!").Split('!');
             string tmp;
             string record = "";
             bool isFirst = true;
             string symbol = "";
             foreach (string line in lines)
             {
-                tmp = line.Trim('　');
+                tmp = line.Trim(' ');
                 
 
                 foreach (KeyValuePair<string,string> curpair in curPairList)
@@ -83,7 +84,7 @@ namespace TheHolyChaliceOfChan
                 }
                 if(record != tmp)
                 {
-                    record += tmp;
+                    record += " " + tmp.Trim(' ');
                 }
             }
             // 最後の
@@ -95,15 +96,16 @@ namespace TheHolyChaliceOfChan
         {
             Data data = new Data();
 
-            string[] datas = line.Split(' ', '　');
+            string[] datas = line.Split(' ');
             string tmp;
 
             data.CurPair = symbol;
             data.Lot = this.BaseLot;
             data.OrderMode = line.Contains("売り") ? 3 : 2;
             data.Price = 0;
+            tmp = datas[datas.ToList().FindIndex(item => item.Contains("損")) + 1];
             data.StopLoss = 0;
-            tmp = datas[datas.ToList().IndexOf("利確目標") + 1];
+            tmp = datas[datas.ToList().FindIndex(item => item.Contains("利確目標")) + 1];
             data.TakeProfit = 0;
             data.DoOrder = true;
 
