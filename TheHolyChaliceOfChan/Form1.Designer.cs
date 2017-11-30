@@ -29,18 +29,30 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tbOutput = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbText = new System.Windows.Forms.TextBox();
-            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
+            this.tbBaseLot = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnPref = new System.Windows.Forms.Button();
+            this.tbText = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbOutput = new System.Windows.Forms.TextBox();
             this.gridData = new System.Windows.Forms.DataGridView();
-            this.btnOutput = new System.Windows.Forms.Button();
             this.btnAnalyze = new System.Windows.Forms.Button();
+            this.btnOutput = new System.Windows.Forms.Button();
+            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
+            this.doOrderDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.curPairDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderModeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderModeTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lotDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stopLossDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.takeProfitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.expirationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -72,9 +84,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnAnalyze);
             this.splitContainer1.Panel2.Controls.Add(this.btnOutput);
             this.splitContainer1.Panel2.Margin = new System.Windows.Forms.Padding(3);
-            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.splitContainer1.Size = new System.Drawing.Size(407, 441);
-            this.splitContainer1.SplitterDistance = 387;
+            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.splitContainer1.Size = new System.Drawing.Size(564, 475);
+            this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -87,6 +99,8 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.tbBaseLot);
+            this.splitContainer2.Panel1.Controls.Add(this.label2);
             this.splitContainer2.Panel1.Controls.Add(this.btnPref);
             this.splitContainer2.Panel1.Controls.Add(this.tbText);
             this.splitContainer2.Panel1.Controls.Add(this.label1);
@@ -96,33 +110,27 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.gridData);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(407, 387);
+            this.splitContainer2.Size = new System.Drawing.Size(564, 421);
             this.splitContainer2.SplitterDistance = 231;
             this.splitContainer2.TabIndex = 0;
             // 
-            // tbOutput
+            // tbBaseLot
             // 
-            this.tbOutput.Location = new System.Drawing.Point(59, 6);
-            this.tbOutput.Name = "tbOutput";
-            this.tbOutput.Size = new System.Drawing.Size(282, 19);
-            this.tbOutput.TabIndex = 0;
+            this.tbBaseLot.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "BaseLot", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N2"));
+            this.tbBaseLot.Location = new System.Drawing.Point(72, 32);
+            this.tbBaseLot.Name = "tbBaseLot";
+            this.tbBaseLot.Size = new System.Drawing.Size(45, 19);
+            this.tbBaseLot.TabIndex = 5;
+            this.tbBaseLot.Text = "1,0";
+            this.tbBaseLot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label1
+            // label2
             // 
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "出力先";
-            // 
-            // tbText
-            // 
-            this.tbText.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "Text", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.tbText.Location = new System.Drawing.Point(10, 31);
-            this.tbText.Multiline = true;
-            this.tbText.Name = "tbText";
-            this.tbText.Size = new System.Drawing.Size(387, 197);
-            this.tbText.TabIndex = 2;
+            this.label2.Location = new System.Drawing.Point(12, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 12);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "基準Lot";
             // 
             // btnPref
             // 
@@ -133,32 +141,61 @@
             this.btnPref.Text = "参照";
             this.btnPref.UseVisualStyleBackColor = true;
             // 
+            // tbText
+            // 
+            this.tbText.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "Text", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.tbText.Location = new System.Drawing.Point(10, 57);
+            this.tbText.Multiline = true;
+            this.tbText.Name = "tbText";
+            this.tbText.Size = new System.Drawing.Size(387, 171);
+            this.tbText.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "出力先";
+            // 
+            // tbOutput
+            // 
+            this.tbOutput.Location = new System.Drawing.Point(72, 6);
+            this.tbOutput.Name = "tbOutput";
+            this.tbOutput.Size = new System.Drawing.Size(269, 19);
+            this.tbOutput.TabIndex = 0;
+            // 
             // gridData
             // 
+            this.gridData.AllowUserToAddRows = false;
+            this.gridData.AllowUserToDeleteRows = false;
+            this.gridData.AllowUserToResizeRows = false;
+            this.gridData.AutoGenerateColumns = false;
             this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.doOrderDataGridViewCheckBoxColumn,
+            this.curPairDataGridViewTextBoxColumn,
+            this.orderModeDataGridViewTextBoxColumn,
+            this.orderModeTextDataGridViewTextBoxColumn,
+            this.lotDataGridViewTextBoxColumn,
+            this.priceDataGridViewTextBoxColumn,
+            this.stopLossDataGridViewTextBoxColumn,
+            this.takeProfitDataGridViewTextBoxColumn,
+            this.expirationDataGridViewTextBoxColumn});
+            this.gridData.DataSource = this.bsGrid;
             this.gridData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridData.Location = new System.Drawing.Point(10, 0);
             this.gridData.Name = "gridData";
+            this.gridData.RowHeadersVisible = false;
             this.gridData.RowTemplate.Height = 21;
-            this.gridData.Size = new System.Drawing.Size(387, 152);
+            this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.gridData.Size = new System.Drawing.Size(544, 186);
             this.gridData.TabIndex = 0;
-            // 
-            // btnOutput
-            // 
-            this.btnOutput.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOutput.Location = new System.Drawing.Point(329, 3);
-            this.btnOutput.Name = "btnOutput";
-            this.btnOutput.Padding = new System.Windows.Forms.Padding(3);
-            this.btnOutput.Size = new System.Drawing.Size(75, 44);
-            this.btnOutput.TabIndex = 0;
-            this.btnOutput.Text = "出力";
-            this.btnOutput.UseVisualStyleBackColor = true;
-            this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
             // 
             // btnAnalyze
             // 
             this.btnAnalyze.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAnalyze.Location = new System.Drawing.Point(254, 3);
+            this.btnAnalyze.Location = new System.Drawing.Point(404, 3);
             this.btnAnalyze.Name = "btnAnalyze";
             this.btnAnalyze.Padding = new System.Windows.Forms.Padding(3);
             this.btnAnalyze.Size = new System.Drawing.Size(75, 44);
@@ -166,6 +203,18 @@
             this.btnAnalyze.Text = "解析";
             this.btnAnalyze.UseVisualStyleBackColor = true;
             this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
+            // 
+            // btnOutput
+            // 
+            this.btnOutput.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOutput.Location = new System.Drawing.Point(479, 3);
+            this.btnOutput.Name = "btnOutput";
+            this.btnOutput.Padding = new System.Windows.Forms.Padding(3);
+            this.btnOutput.Size = new System.Drawing.Size(75, 44);
+            this.btnOutput.TabIndex = 0;
+            this.btnOutput.Text = "出力";
+            this.btnOutput.UseVisualStyleBackColor = true;
+            this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
             // 
             // bsGrid
             // 
@@ -176,12 +225,76 @@
             // 
             this.bsMain.DataSource = typeof(TheHolyChaliceOfChan.Model);
             // 
+            // doOrderDataGridViewCheckBoxColumn
+            // 
+            this.doOrderDataGridViewCheckBoxColumn.DataPropertyName = "DoOrder";
+            this.doOrderDataGridViewCheckBoxColumn.HeaderText = "発注";
+            this.doOrderDataGridViewCheckBoxColumn.Name = "doOrderDataGridViewCheckBoxColumn";
+            this.doOrderDataGridViewCheckBoxColumn.Width = 40;
+            // 
+            // curPairDataGridViewTextBoxColumn
+            // 
+            this.curPairDataGridViewTextBoxColumn.DataPropertyName = "CurPair";
+            this.curPairDataGridViewTextBoxColumn.HeaderText = "通貨ペア";
+            this.curPairDataGridViewTextBoxColumn.Name = "curPairDataGridViewTextBoxColumn";
+            this.curPairDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // orderModeDataGridViewTextBoxColumn
+            // 
+            this.orderModeDataGridViewTextBoxColumn.DataPropertyName = "OrderMode";
+            this.orderModeDataGridViewTextBoxColumn.HeaderText = "OrderMode";
+            this.orderModeDataGridViewTextBoxColumn.Name = "orderModeDataGridViewTextBoxColumn";
+            this.orderModeDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // orderModeTextDataGridViewTextBoxColumn
+            // 
+            this.orderModeTextDataGridViewTextBoxColumn.DataPropertyName = "OrderModeText";
+            this.orderModeTextDataGridViewTextBoxColumn.HeaderText = "注文";
+            this.orderModeTextDataGridViewTextBoxColumn.Name = "orderModeTextDataGridViewTextBoxColumn";
+            this.orderModeTextDataGridViewTextBoxColumn.ReadOnly = true;
+            this.orderModeTextDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // lotDataGridViewTextBoxColumn
+            // 
+            this.lotDataGridViewTextBoxColumn.DataPropertyName = "Lot";
+            this.lotDataGridViewTextBoxColumn.HeaderText = "Lot";
+            this.lotDataGridViewTextBoxColumn.Name = "lotDataGridViewTextBoxColumn";
+            this.lotDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            this.priceDataGridViewTextBoxColumn.HeaderText = "価格";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            this.priceDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // stopLossDataGridViewTextBoxColumn
+            // 
+            this.stopLossDataGridViewTextBoxColumn.DataPropertyName = "StopLoss";
+            this.stopLossDataGridViewTextBoxColumn.HeaderText = "S/L";
+            this.stopLossDataGridViewTextBoxColumn.Name = "stopLossDataGridViewTextBoxColumn";
+            this.stopLossDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // takeProfitDataGridViewTextBoxColumn
+            // 
+            this.takeProfitDataGridViewTextBoxColumn.DataPropertyName = "TakeProfit";
+            this.takeProfitDataGridViewTextBoxColumn.HeaderText = "T/P";
+            this.takeProfitDataGridViewTextBoxColumn.Name = "takeProfitDataGridViewTextBoxColumn";
+            this.takeProfitDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // expirationDataGridViewTextBoxColumn
+            // 
+            this.expirationDataGridViewTextBoxColumn.DataPropertyName = "Expiration";
+            this.expirationDataGridViewTextBoxColumn.HeaderText = "期限";
+            this.expirationDataGridViewTextBoxColumn.Name = "expirationDataGridViewTextBoxColumn";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(407, 441);
+            this.ClientSize = new System.Drawing.Size(564, 475);
             this.Controls.Add(this.splitContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "The Holy Chalice of Chan";
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -214,6 +327,17 @@
         private System.Windows.Forms.Button btnOutput;
         private System.Windows.Forms.BindingSource bsMain;
         private System.Windows.Forms.BindingSource bsGrid;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbBaseLot;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn doOrderDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn curPairDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderModeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderModeTextDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lotDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stopLossDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn takeProfitDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn expirationDataGridViewTextBoxColumn;
     }
 }
 

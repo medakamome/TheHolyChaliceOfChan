@@ -23,6 +23,7 @@ namespace TheHolyChaliceOfChan
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
             model.Analyze();
+            bsMain.ResetBindings(false);
         }
 
         private void btnOutput_Click(object sender, EventArgs e)
