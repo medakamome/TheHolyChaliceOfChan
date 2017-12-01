@@ -21,4 +21,8 @@ namespace TheHolyChaliceOfChan
         Buy,
         Sell
     }
+
+    public enum OutputResult
+    {
+    }
 }

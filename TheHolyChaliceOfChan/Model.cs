@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using TheHolyChaliceOfChan.Properties;
 
 namespace TheHolyChaliceOfChan
 {
@@ -23,7 +25,8 @@ namespace TheHolyChaliceOfChan
                 new KeyValuePair<string, string>("豪ドル円","AUDJPY"),
                 new KeyValuePair<string, string>("ポンド円","GBPJPY"),
                 new KeyValuePair<string, string>("NZドル円","NZDJPY"),
-                new KeyValuePair<string, string>("ユーロドル","EURUSD")
+                new KeyValuePair<string, string>("ユーロドル","EURUSD"),
+                new KeyValuePair<string, string>("ポンドドル","GBPUSD"),
 
             };
 
@@ -31,13 +34,14 @@ namespace TheHolyChaliceOfChan
         {
             DataList = new List<Data>();
             BaseLot = 1.0;
+            OutDirectory = Settings.Default.OutDirectory;
         }
 
         public void Analyze()
         {
             if (String.IsNullOrEmpty(Text))
             {
-                return;
+                throw new Exception("解析対象データがありません。");
             }
 
             DataList.Clear();
@@ -98,16 +102,36 @@ namespace TheHolyChaliceOfChan
 
             string[] datas = line.Split(' ');
             string tmp;
-
+            double value;
+            Regex reg1 = new Regex(@"(\d+\.\d+)");
+            Match match;
+            Regex reg2 = new Regex(@"\d+");
+            
             data.CurPair = symbol;
             data.Lot = this.BaseLot;
             data.OrderMode = line.Contains("売り") ? 3 : 2;
-            data.Price = 0;
+            match = reg1.Match(line);
+            if (double.TryParse(match.Value, out value))
+            {
+                data.Price = value;
+            }
             tmp = datas[datas.ToList().FindIndex(item => item.Contains("損")) + 1];
-            data.StopLoss = 0;
+            match = reg2.Match(tmp);
+            if(double.TryParse(match.Value, out value))
+            {
+                data.StopLoss =
+                    data.Price - (data.OrderMode == 2 ? value : -value) / (data.Price > 50 ? 100 : 10000);
+            }
             tmp = datas[datas.ToList().FindIndex(item => item.Contains("利確目標")) + 1];
-            data.TakeProfit = 0;
+            match = reg2.Match(tmp);
+            if (double.TryParse(match.Value, out value))
+            {
+                data.TakeProfit =
+                    data.Price - (data.OrderMode == 2 ? -value : value) / (data.Price > 50 ? 100 : 10000);
+            }
             data.DoOrder = true;
+            data.Recommend = line.Contains("本日の") ? "◎" : "";
+            data.Expiration = 12 * 60 * 60;
 
             return data;
         }
@@ -115,6 +139,41 @@ namespace TheHolyChaliceOfChan
         public void Output()
         {
 
+            if (String.IsNullOrEmpty(OutDirectory))
+            {
+                throw new Exception("出力先を指定してください。");
+            }
+
+            if (DataList.Count(item => item.DoOrder) == 0)
+            {
+                throw new Exception("出力対象データがありません。");
+            }
+
+            Settings.Default.OutDirectory = OutDirectory;
+            Settings.Default.Save();
+
+            string format = "{0},{1},{2},{3},{4},{5},{6}";
+
+            using(StreamWriter sw = new StreamWriter(OutDirectory + @"\chan.csv"))
+            {
+                foreach (Data data in DataList)
+                {
+                    if (!data.DoOrder)
+                        continue;
+
+                    sw.WriteLine(
+                        format,
+                        data.CurPair,
+                        data.OrderMode,
+                        data.Lot,
+                        data.Price,
+                        data.TakeProfit,
+                        data.StopLoss,
+                        data.Expiration
+                        );
+
+                }
+            }
         }
     }
 }

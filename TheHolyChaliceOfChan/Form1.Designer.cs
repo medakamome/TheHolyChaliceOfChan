@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -39,10 +47,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbOutput = new System.Windows.Forms.TextBox();
             this.gridData = new System.Windows.Forms.DataGridView();
+            this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.btnOutput = new System.Windows.Forms.Button();
-            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
-            this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
+            this.fbd = new System.Windows.Forms.FolderBrowserDialog();
+            this.Recommend = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.doOrderDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.curPairDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -93,6 +102,7 @@
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -120,7 +130,7 @@
             this.tbBaseLot.Location = new System.Drawing.Point(72, 32);
             this.tbBaseLot.Name = "tbBaseLot";
             this.tbBaseLot.Size = new System.Drawing.Size(45, 19);
-            this.tbBaseLot.TabIndex = 5;
+            this.tbBaseLot.TabIndex = 2;
             this.tbBaseLot.Text = "1,0";
             this.tbBaseLot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -137,9 +147,10 @@
             this.btnPref.Location = new System.Drawing.Point(347, 6);
             this.btnPref.Name = "btnPref";
             this.btnPref.Size = new System.Drawing.Size(46, 23);
-            this.btnPref.TabIndex = 3;
+            this.btnPref.TabIndex = 1;
             this.btnPref.Text = "参照";
             this.btnPref.UseVisualStyleBackColor = true;
+            this.btnPref.Click += new System.EventHandler(this.btnPref_Click);
             // 
             // tbText
             // 
@@ -147,8 +158,9 @@
             this.tbText.Location = new System.Drawing.Point(10, 57);
             this.tbText.Multiline = true;
             this.tbText.Name = "tbText";
+            this.tbText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbText.Size = new System.Drawing.Size(387, 171);
-            this.tbText.TabIndex = 2;
+            this.tbText.TabIndex = 3;
             // 
             // label1
             // 
@@ -160,6 +172,7 @@
             // 
             // tbOutput
             // 
+            this.tbOutput.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "OutDirectory", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.tbOutput.Location = new System.Drawing.Point(72, 6);
             this.tbOutput.Name = "tbOutput";
             this.tbOutput.Size = new System.Drawing.Size(269, 19);
@@ -174,6 +187,7 @@
             this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.doOrderDataGridViewCheckBoxColumn,
+            this.Recommend,
             this.curPairDataGridViewTextBoxColumn,
             this.orderModeDataGridViewTextBoxColumn,
             this.orderModeTextDataGridViewTextBoxColumn,
@@ -190,7 +204,12 @@
             this.gridData.RowTemplate.Height = 21;
             this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.gridData.Size = new System.Drawing.Size(544, 186);
-            this.gridData.TabIndex = 0;
+            this.gridData.TabIndex = 4;
+            // 
+            // bsGrid
+            // 
+            this.bsGrid.DataMember = "DataList";
+            this.bsGrid.DataSource = this.bsMain;
             // 
             // btnAnalyze
             // 
@@ -216,10 +235,15 @@
             this.btnOutput.UseVisualStyleBackColor = true;
             this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
             // 
-            // bsGrid
+            // Recommend
             // 
-            this.bsGrid.DataMember = "DataList";
-            this.bsGrid.DataSource = this.bsMain;
+            this.Recommend.DataPropertyName = "Recommend";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Recommend.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Recommend.HeaderText = "推奨";
+            this.Recommend.Name = "Recommend";
+            this.Recommend.ReadOnly = true;
+            this.Recommend.Width = 40;
             // 
             // bsMain
             // 
@@ -230,11 +254,13 @@
             this.doOrderDataGridViewCheckBoxColumn.DataPropertyName = "DoOrder";
             this.doOrderDataGridViewCheckBoxColumn.HeaderText = "発注";
             this.doOrderDataGridViewCheckBoxColumn.Name = "doOrderDataGridViewCheckBoxColumn";
-            this.doOrderDataGridViewCheckBoxColumn.Width = 40;
+            this.doOrderDataGridViewCheckBoxColumn.Width = 60;
             // 
             // curPairDataGridViewTextBoxColumn
             // 
             this.curPairDataGridViewTextBoxColumn.DataPropertyName = "CurPair";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.curPairDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.curPairDataGridViewTextBoxColumn.HeaderText = "通貨ペア";
             this.curPairDataGridViewTextBoxColumn.Name = "curPairDataGridViewTextBoxColumn";
             this.curPairDataGridViewTextBoxColumn.Width = 80;
@@ -249,6 +275,8 @@
             // orderModeTextDataGridViewTextBoxColumn
             // 
             this.orderModeTextDataGridViewTextBoxColumn.DataPropertyName = "OrderModeText";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.orderModeTextDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.orderModeTextDataGridViewTextBoxColumn.HeaderText = "注文";
             this.orderModeTextDataGridViewTextBoxColumn.Name = "orderModeTextDataGridViewTextBoxColumn";
             this.orderModeTextDataGridViewTextBoxColumn.ReadOnly = true;
@@ -257,36 +285,51 @@
             // lotDataGridViewTextBoxColumn
             // 
             this.lotDataGridViewTextBoxColumn.DataPropertyName = "Lot";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "#0.00";
+            this.lotDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.lotDataGridViewTextBoxColumn.HeaderText = "Lot";
             this.lotDataGridViewTextBoxColumn.Name = "lotDataGridViewTextBoxColumn";
-            this.lotDataGridViewTextBoxColumn.Width = 50;
+            this.lotDataGridViewTextBoxColumn.Width = 40;
             // 
             // priceDataGridViewTextBoxColumn
             // 
             this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "##0.000##";
+            this.priceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
             this.priceDataGridViewTextBoxColumn.HeaderText = "価格";
             this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.Width = 70;
+            this.priceDataGridViewTextBoxColumn.Width = 60;
             // 
             // stopLossDataGridViewTextBoxColumn
             // 
             this.stopLossDataGridViewTextBoxColumn.DataPropertyName = "StopLoss";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "##0.000##";
+            this.stopLossDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
             this.stopLossDataGridViewTextBoxColumn.HeaderText = "S/L";
             this.stopLossDataGridViewTextBoxColumn.Name = "stopLossDataGridViewTextBoxColumn";
-            this.stopLossDataGridViewTextBoxColumn.Width = 70;
+            this.stopLossDataGridViewTextBoxColumn.Width = 60;
             // 
             // takeProfitDataGridViewTextBoxColumn
             // 
             this.takeProfitDataGridViewTextBoxColumn.DataPropertyName = "TakeProfit";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "##0.000##";
+            this.takeProfitDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
             this.takeProfitDataGridViewTextBoxColumn.HeaderText = "T/P";
             this.takeProfitDataGridViewTextBoxColumn.Name = "takeProfitDataGridViewTextBoxColumn";
-            this.takeProfitDataGridViewTextBoxColumn.Width = 70;
+            this.takeProfitDataGridViewTextBoxColumn.Width = 60;
             // 
             // expirationDataGridViewTextBoxColumn
             // 
             this.expirationDataGridViewTextBoxColumn.DataPropertyName = "Expiration";
-            this.expirationDataGridViewTextBoxColumn.HeaderText = "期限";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.expirationDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.expirationDataGridViewTextBoxColumn.HeaderText = "期限（秒）";
             this.expirationDataGridViewTextBoxColumn.Name = "expirationDataGridViewTextBoxColumn";
+            this.expirationDataGridViewTextBoxColumn.Width = 80;
             // 
             // Form1
             // 
@@ -321,7 +364,6 @@
         private System.Windows.Forms.TextBox tbText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbOutput;
-        private System.DirectoryServices.DirectoryEntry directoryEntry1;
         private System.Windows.Forms.DataGridView gridData;
         private System.Windows.Forms.Button btnAnalyze;
         private System.Windows.Forms.Button btnOutput;
@@ -329,7 +371,9 @@
         private System.Windows.Forms.BindingSource bsGrid;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbBaseLot;
+        private System.Windows.Forms.FolderBrowserDialog fbd;
         private System.Windows.Forms.DataGridViewCheckBoxColumn doOrderDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Recommend;
         private System.Windows.Forms.DataGridViewTextBoxColumn curPairDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderModeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderModeTextDataGridViewTextBoxColumn;
