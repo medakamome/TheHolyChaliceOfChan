@@ -15,6 +15,7 @@ namespace TheHolyChaliceOfChan
         public string OutDirectory { get; set; }
         public string Text{ get; set; }
         public double BaseLot { get; set; }
+        public int Expiration { get; set; }
         public List<Data> DataList { get; set; }
 
         private List<KeyValuePair<string, string>> curPairList =
@@ -34,6 +35,7 @@ namespace TheHolyChaliceOfChan
         {
             DataList = new List<Data>();
             BaseLot = Settings.Default.BaseLot;
+            Expiration = Settings.Default.Expiration;
             OutDirectory = Settings.Default.OutDirectory;
         }
 
@@ -131,7 +133,7 @@ namespace TheHolyChaliceOfChan
             }
             data.DoOrder = true;
             data.Recommend = line.Contains("本日の") ? "◎" : "";
-            data.Expiration = 12 * 60 * 60;
+            data.Expiration = Expiration * 60;
 
             return data;
         }
@@ -150,6 +152,7 @@ namespace TheHolyChaliceOfChan
             }
 
             Settings.Default.BaseLot = BaseLot;
+            Settings.Default.Expiration = Expiration;
             Settings.Default.OutDirectory = OutDirectory;
             Settings.Default.Save();
 

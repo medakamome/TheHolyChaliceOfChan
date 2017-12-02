@@ -41,15 +41,21 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tbBaseLot = new System.Windows.Forms.TextBox();
-            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.btnPref = new System.Windows.Forms.Button();
             this.tbText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbOutput = new System.Windows.Forms.TextBox();
             this.gridData = new System.Windows.Forms.DataGridView();
-            this.doOrderDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Recommend = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
+            this.btnAnalyze = new System.Windows.Forms.Button();
+            this.btnOutput = new System.Windows.Forms.Button();
+            this.fbd = new System.Windows.Forms.FolderBrowserDialog();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
+            this.doOrderDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.curPairDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderModeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderModeTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,10 +64,6 @@
             this.stopLossDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.takeProfitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.expirationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
-            this.btnAnalyze = new System.Windows.Forms.Button();
-            this.btnOutput = new System.Windows.Forms.Button();
-            this.fbd = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -70,9 +72,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -109,6 +111,8 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.textBox1);
+            this.splitContainer2.Panel1.Controls.Add(this.label3);
             this.splitContainer2.Panel1.Controls.Add(this.tbBaseLot);
             this.splitContainer2.Panel1.Controls.Add(this.label2);
             this.splitContainer2.Panel1.Controls.Add(this.btnPref);
@@ -134,15 +138,12 @@
             this.tbBaseLot.Text = "1,0";
             this.tbBaseLot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // bsMain
-            // 
-            this.bsMain.DataSource = typeof(TheHolyChaliceOfChan.Model);
-            // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(12, 34);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 35);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 12);
+            this.label2.Size = new System.Drawing.Size(45, 12);
             this.label2.TabIndex = 4;
             this.label2.Text = "基準Lot";
             // 
@@ -210,13 +211,6 @@
             this.gridData.Size = new System.Drawing.Size(544, 186);
             this.gridData.TabIndex = 4;
             // 
-            // doOrderDataGridViewCheckBoxColumn
-            // 
-            this.doOrderDataGridViewCheckBoxColumn.DataPropertyName = "DoOrder";
-            this.doOrderDataGridViewCheckBoxColumn.HeaderText = "発注";
-            this.doOrderDataGridViewCheckBoxColumn.Name = "doOrderDataGridViewCheckBoxColumn";
-            this.doOrderDataGridViewCheckBoxColumn.Width = 60;
-            // 
             // Recommend
             // 
             this.Recommend.DataPropertyName = "Recommend";
@@ -226,6 +220,65 @@
             this.Recommend.Name = "Recommend";
             this.Recommend.ReadOnly = true;
             this.Recommend.Width = 40;
+            // 
+            // bsGrid
+            // 
+            this.bsGrid.DataMember = "DataList";
+            this.bsGrid.DataSource = this.bsMain;
+            // 
+            // btnAnalyze
+            // 
+            this.btnAnalyze.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAnalyze.Location = new System.Drawing.Point(404, 3);
+            this.btnAnalyze.Name = "btnAnalyze";
+            this.btnAnalyze.Padding = new System.Windows.Forms.Padding(3);
+            this.btnAnalyze.Size = new System.Drawing.Size(75, 44);
+            this.btnAnalyze.TabIndex = 1;
+            this.btnAnalyze.Text = "解析";
+            this.btnAnalyze.UseVisualStyleBackColor = true;
+            this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
+            // 
+            // btnOutput
+            // 
+            this.btnOutput.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOutput.Location = new System.Drawing.Point(479, 3);
+            this.btnOutput.Name = "btnOutput";
+            this.btnOutput.Padding = new System.Windows.Forms.Padding(3);
+            this.btnOutput.Size = new System.Drawing.Size(75, 44);
+            this.btnOutput.TabIndex = 0;
+            this.btnOutput.Text = "出力";
+            this.btnOutput.UseVisualStyleBackColor = true;
+            this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(138, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "期限（分）";
+            // 
+            // textBox1
+            // 
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "Expiration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N0"));
+            this.textBox1.Location = new System.Drawing.Point(197, 32);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(45, 19);
+            this.textBox1.TabIndex = 6;
+            this.textBox1.Text = "720";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // bsMain
+            // 
+            this.bsMain.DataSource = typeof(TheHolyChaliceOfChan.Model);
+            // 
+            // doOrderDataGridViewCheckBoxColumn
+            // 
+            this.doOrderDataGridViewCheckBoxColumn.DataPropertyName = "DoOrder";
+            this.doOrderDataGridViewCheckBoxColumn.HeaderText = "発注";
+            this.doOrderDataGridViewCheckBoxColumn.Name = "doOrderDataGridViewCheckBoxColumn";
+            this.doOrderDataGridViewCheckBoxColumn.Width = 60;
             // 
             // curPairDataGridViewTextBoxColumn
             // 
@@ -302,35 +355,6 @@
             this.expirationDataGridViewTextBoxColumn.Name = "expirationDataGridViewTextBoxColumn";
             this.expirationDataGridViewTextBoxColumn.Width = 80;
             // 
-            // bsGrid
-            // 
-            this.bsGrid.DataMember = "DataList";
-            this.bsGrid.DataSource = this.bsMain;
-            // 
-            // btnAnalyze
-            // 
-            this.btnAnalyze.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAnalyze.Location = new System.Drawing.Point(404, 3);
-            this.btnAnalyze.Name = "btnAnalyze";
-            this.btnAnalyze.Padding = new System.Windows.Forms.Padding(3);
-            this.btnAnalyze.Size = new System.Drawing.Size(75, 44);
-            this.btnAnalyze.TabIndex = 1;
-            this.btnAnalyze.Text = "解析";
-            this.btnAnalyze.UseVisualStyleBackColor = true;
-            this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
-            // 
-            // btnOutput
-            // 
-            this.btnOutput.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOutput.Location = new System.Drawing.Point(479, 3);
-            this.btnOutput.Name = "btnOutput";
-            this.btnOutput.Padding = new System.Windows.Forms.Padding(3);
-            this.btnOutput.Size = new System.Drawing.Size(75, 44);
-            this.btnOutput.TabIndex = 0;
-            this.btnOutput.Text = "出力";
-            this.btnOutput.UseVisualStyleBackColor = true;
-            this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -349,9 +373,9 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -382,6 +406,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn stopLossDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn takeProfitDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn expirationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
     }
 }
 
