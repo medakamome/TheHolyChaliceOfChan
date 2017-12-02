@@ -33,7 +33,7 @@ namespace TheHolyChaliceOfChan
         public Model()
         {
             DataList = new List<Data>();
-            BaseLot = 1.0;
+            BaseLot = Settings.Default.BaseLot;
             OutDirectory = Settings.Default.OutDirectory;
         }
 
@@ -149,6 +149,7 @@ namespace TheHolyChaliceOfChan
                 throw new Exception("出力対象データがありません。");
             }
 
+            Settings.Default.BaseLot = BaseLot;
             Settings.Default.OutDirectory = OutDirectory;
             Settings.Default.Save();
 

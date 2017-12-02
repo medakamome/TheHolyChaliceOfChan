@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>45026be328817b235037236e8c5d645b_xo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\chalice.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -88,11 +88,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="45026be328817b235037236e8c5d645b_xo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
+    <Content Include="Resources\chalice.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

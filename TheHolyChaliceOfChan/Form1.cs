@@ -38,6 +38,7 @@ namespace TheHolyChaliceOfChan
             try
             {
                 model.Output();
+                MessageBox.Show("出力完了");
             }catch(Exception ex)
             {
                 MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -46,6 +47,7 @@ namespace TheHolyChaliceOfChan
 
         private void btnPref_Click(object sender, EventArgs e)
         {
+            fbd.SelectedPath = model.OutDirectory;
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 model.OutDirectory = fbd.SelectedPath;

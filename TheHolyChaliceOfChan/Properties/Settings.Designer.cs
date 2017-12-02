@@ -34,5 +34,17 @@ namespace TheHolyChaliceOfChan.Properties {
                 this["OutDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double BaseLot {
+            get {
+                return ((double)(this["BaseLot"]));
+            }
+            set {
+                this["BaseLot"] = value;
+            }
+        }
     }
 }
