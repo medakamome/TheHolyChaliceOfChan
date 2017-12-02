@@ -22,13 +22,35 @@ namespace TheHolyChaliceOfChan
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            model.Analyze();
-            bsMain.ResetBindings(false);
+            try
+            {
+                model.Analyze();
+                bsMain.ResetBindings(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnOutput_Click(object sender, EventArgs e)
         {
-            model.Output();
+            try
+            {
+                model.Output();
+            }catch(Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPref_Click(object sender, EventArgs e)
+        {
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                model.OutDirectory = fbd.SelectedPath;
+                bsMain.ResetBindings(false);
+            }
         }
     }
 }
