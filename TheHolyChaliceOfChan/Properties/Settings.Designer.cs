@@ -25,7 +25,7 @@ namespace TheHolyChaliceOfChan.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:¥")]
         public string OutDirectory {
             get {
                 return ((string)(this["OutDirectory"]));

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TheHolyChaliceOfChan.Properties;
 
 namespace TheHolyChaliceOfChan
@@ -105,27 +104,35 @@ namespace TheHolyChaliceOfChan
             string[] datas = line.Split(' ');
             string tmp;
             double value;
-            Regex reg1 = new Regex(@"(\d+\.\d+)");
+
+            string regPattern1 = @"(\d+\.\d+)";
+            string regPattern2 = @"\d+";
+            string regPattern3 = @"[¥(（]売り[¥)）]";
+
+            //Regex reg1 = new Regex(@"(\d+\.\d+)");
+            //Regex reg2 = new Regex(@"\d+");
             Match match;
-            Regex reg2 = new Regex(@"\d+");
             
+
             data.CurPair = symbol;
             data.Lot = this.BaseLot;
-            data.OrderMode = line.Contains("売り") ? 3 : 2;
-            match = reg1.Match(line);
+            match = new Regex(regPattern3).Match(line);
+            //data.OrderMode = line.Contains("売り") ? 3 : 2;
+            data.OrderMode = match.Success ? 3 : 2;
+            match = new Regex(regPattern1).Match(line);
             if (double.TryParse(match.Value, out value))
             {
                 data.Price = value;
             }
             tmp = datas[datas.ToList().FindIndex(item => item.Contains("損")) + 1];
-            match = reg2.Match(tmp);
+            match = new Regex(regPattern2).Match(tmp);
             if(double.TryParse(match.Value, out value))
             {
                 data.StopLoss =
                     data.Price - (data.OrderMode == 2 ? value : -value) / (data.Price > 50 ? 100 : 10000);
             }
             tmp = datas[datas.ToList().FindIndex(item => item.Contains("利確目標")) + 1];
-            match = reg2.Match(tmp);
+            match = new Regex(regPattern2).Match(tmp);
             if (double.TryParse(match.Value, out value))
             {
                 data.TakeProfit =

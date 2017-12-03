@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="OutDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\</Value>
+      <Value Profile="(Default)">c:¥</Value>
     </Setting>
     <Setting Name="BaseLot" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
