@@ -11,5 +11,11 @@
     <Setting Name="Expiration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">720</Value>
     </Setting>
+    <Setting Name="ExpirationTime" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">06:00:00</Value>
+    </Setting>
+    <Setting Name="RecommendTP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -30,16 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tbBaseLot = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnPref = new System.Windows.Forms.Button();
@@ -47,13 +50,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbOutput = new System.Windows.Forms.TextBox();
             this.gridData = new System.Windows.Forms.DataGridView();
-            this.Recommend = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.btnOutput = new System.Windows.Forms.Button();
             this.fbd = new System.Windows.Forms.FolderBrowserDialog();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cbRecommend = new System.Windows.Forms.CheckBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.Recommend = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RecommendTakeProfit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.doOrderDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.curPairDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,11 +68,9 @@
             this.stopLossDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.takeProfitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.expirationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            //((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            //((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -96,7 +98,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnOutput);
             this.splitContainer1.Panel2.Margin = new System.Windows.Forms.Padding(3);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 10, 3);
-            this.splitContainer1.Size = new System.Drawing.Size(564, 475);
+            this.splitContainer1.Size = new System.Drawing.Size(627, 475);
             this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -111,6 +113,8 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.textBox2);
+            this.splitContainer2.Panel1.Controls.Add(this.cbRecommend);
             this.splitContainer2.Panel1.Controls.Add(this.textBox1);
             this.splitContainer2.Panel1.Controls.Add(this.label3);
             this.splitContainer2.Panel1.Controls.Add(this.tbBaseLot);
@@ -124,9 +128,29 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.gridData);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(564, 421);
+            this.splitContainer2.Size = new System.Drawing.Size(627, 421);
             this.splitContainer2.SplitterDistance = 231;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "Expiration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N0"));
+            this.textBox1.Location = new System.Drawing.Point(413, 57);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(45, 19);
+            this.textBox1.TabIndex = 6;
+            this.textBox1.Text = "720";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox1.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(138, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(127, 12);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "期限（00:00:00-23:59:59）";
             // 
             // tbBaseLot
             // 
@@ -200,6 +224,7 @@
             this.priceDataGridViewTextBoxColumn,
             this.stopLossDataGridViewTextBoxColumn,
             this.takeProfitDataGridViewTextBoxColumn,
+            this.RecommendTakeProfit,
             this.expirationDataGridViewTextBoxColumn});
             this.gridData.DataSource = this.bsGrid;
             this.gridData.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -208,18 +233,8 @@
             this.gridData.RowHeadersVisible = false;
             this.gridData.RowTemplate.Height = 21;
             this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridData.Size = new System.Drawing.Size(544, 186);
+            this.gridData.Size = new System.Drawing.Size(607, 186);
             this.gridData.TabIndex = 4;
-            // 
-            // Recommend
-            // 
-            this.Recommend.DataPropertyName = "Recommend";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Recommend.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Recommend.HeaderText = "推奨";
-            this.Recommend.Name = "Recommend";
-            this.Recommend.ReadOnly = true;
-            this.Recommend.Width = 40;
             // 
             // bsGrid
             // 
@@ -229,7 +244,7 @@
             // btnAnalyze
             // 
             this.btnAnalyze.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAnalyze.Location = new System.Drawing.Point(404, 3);
+            this.btnAnalyze.Location = new System.Drawing.Point(467, 3);
             this.btnAnalyze.Name = "btnAnalyze";
             this.btnAnalyze.Padding = new System.Windows.Forms.Padding(3);
             this.btnAnalyze.Size = new System.Drawing.Size(75, 44);
@@ -241,7 +256,7 @@
             // btnOutput
             // 
             this.btnOutput.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOutput.Location = new System.Drawing.Point(479, 3);
+            this.btnOutput.Location = new System.Drawing.Point(542, 3);
             this.btnOutput.Name = "btnOutput";
             this.btnOutput.Padding = new System.Windows.Forms.Padding(3);
             this.btnOutput.Size = new System.Drawing.Size(75, 44);
@@ -250,24 +265,45 @@
             this.btnOutput.UseVisualStyleBackColor = true;
             this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
             // 
-            // label3
+            // cbRecommend
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(138, 35);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "期限（分）";
+            this.cbRecommend.AutoSize = true;
+            this.cbRecommend.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.bsMain, "RecommendTP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.cbRecommend.Location = new System.Drawing.Point(346, 34);
+            this.cbRecommend.Name = "cbRecommend";
+            this.cbRecommend.Size = new System.Drawing.Size(112, 16);
+            this.cbRecommend.TabIndex = 7;
+            this.cbRecommend.Text = "推奨値を使用する";
+            this.cbRecommend.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBox2
             // 
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "Expiration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N0"));
-            this.textBox1.Location = new System.Drawing.Point(197, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(45, 19);
-            this.textBox1.TabIndex = 6;
-            this.textBox1.Text = "720";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "ExpirationTimeStr", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox2.Location = new System.Drawing.Point(271, 32);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(56, 19);
+            this.textBox2.TabIndex = 8;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // Recommend
+            // 
+            this.Recommend.DataPropertyName = "Recommend";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Recommend.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Recommend.HeaderText = "推奨";
+            this.Recommend.Name = "Recommend";
+            this.Recommend.ReadOnly = true;
+            this.Recommend.Width = 40;
+            // 
+            // RecommendTakeProfit
+            // 
+            this.RecommendTakeProfit.DataPropertyName = "RecommendTakeProfit";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "##0.000##";
+            this.RecommendTakeProfit.DefaultCellStyle = dataGridViewCellStyle8;
+            this.RecommendTakeProfit.HeaderText = "推奨T/P";
+            this.RecommendTakeProfit.Name = "RecommendTakeProfit";
+            this.RecommendTakeProfit.Width = 60;
             // 
             // bsMain
             // 
@@ -349,8 +385,8 @@
             // expirationDataGridViewTextBoxColumn
             // 
             this.expirationDataGridViewTextBoxColumn.DataPropertyName = "Expiration";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.expirationDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.expirationDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle9;
             this.expirationDataGridViewTextBoxColumn.HeaderText = "期限（秒）";
             this.expirationDataGridViewTextBoxColumn.Name = "expirationDataGridViewTextBoxColumn";
             this.expirationDataGridViewTextBoxColumn.Width = 80;
@@ -359,19 +395,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 475);
+            this.ClientSize = new System.Drawing.Size(627, 475);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "The Holy Chalice of Chan";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            //((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
-            //((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsGrid)).EndInit();
@@ -396,6 +430,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbBaseLot;
         private System.Windows.Forms.FolderBrowserDialog fbd;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cbRecommend;
+        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.DataGridViewCheckBoxColumn doOrderDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Recommend;
         private System.Windows.Forms.DataGridViewTextBoxColumn curPairDataGridViewTextBoxColumn;
@@ -405,9 +443,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn stopLossDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn takeProfitDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RecommendTakeProfit;
         private System.Windows.Forms.DataGridViewTextBoxColumn expirationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
     }
 }
 

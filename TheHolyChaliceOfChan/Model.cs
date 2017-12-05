@@ -15,6 +15,9 @@ namespace TheHolyChaliceOfChan
         public string Text{ get; set; }
         public double BaseLot { get; set; }
         public int Expiration { get; set; }
+        public TimeSpan ExpirationTime { get; set; }
+        public string ExpirationTimeStr { get { return ExpirationTime.ToString(); } }
+        public bool RecommendTP { get; set; }
         public List<Data> DataList { get; set; }
 
         private List<KeyValuePair<string, string>> curPairList =
@@ -36,6 +39,8 @@ namespace TheHolyChaliceOfChan
             BaseLot = Settings.Default.BaseLot;
             Expiration = Settings.Default.Expiration;
             OutDirectory = Settings.Default.OutDirectory;
+            ExpirationTime = Settings.Default.ExpirationTime;
+            RecommendTP = Settings.Default.RecommendTP;
         }
 
         public void Analyze()
@@ -108,6 +113,10 @@ namespace TheHolyChaliceOfChan
             string regPattern1 = @"(\d+\.\d+)";
             string regPattern2 = @"\d+";
             string regPattern3 = @"[¥(（]売り[¥)）]";
+            string regPattern4 = @"推奨＋([0-9]+)";
+
+            DateTime now = DateTime.Now;
+            TimeSpan nowTime = new TimeSpan(now.Hour, now.Minute, now.Second);
 
             //Regex reg1 = new Regex(@"(\d+\.\d+)");
             //Regex reg2 = new Regex(@"\d+");
@@ -138,9 +147,16 @@ namespace TheHolyChaliceOfChan
                 data.TakeProfit =
                     data.Price - (data.OrderMode == 2 ? -value : value) / (data.Price > 50 ? 100 : 10000);
             }
+            match = new Regex(regPattern4).Match(line);
+            if(double.TryParse(match.Groups[1].Value, out value))
+            {
+                data.RecommendTakeProfit =
+                    data.Price - (data.OrderMode == 2 ? -value : value) / (data.Price > 50 ? 100 : 10000);
+            } 
             data.DoOrder = true;
             data.Recommend = line.Contains("本日の") ? "◎" : "";
-            data.Expiration = Expiration * 60;
+            //data.Expiration = Expiration * 60;
+            data.Expiration = nowTime <= ExpirationTime ? 0 : 0;
 
             return data;
         }
@@ -160,7 +176,13 @@ namespace TheHolyChaliceOfChan
 
             Settings.Default.BaseLot = BaseLot;
             Settings.Default.Expiration = Expiration;
+            TimeSpan ts;
+            if(TimeSpan.TryParse(ExpirationTimeStr, out ts))
+            {
+                Settings.Default.ExpirationTime = ts;
+            }
             Settings.Default.OutDirectory = OutDirectory;
+            Settings.Default.RecommendTP = RecommendTP;
             Settings.Default.Save();
 
             string format = "{0},{1},{2},{3},{4},{5},{6}";
@@ -178,7 +200,7 @@ namespace TheHolyChaliceOfChan
                         data.OrderMode,
                         data.Lot,
                         data.Price,
-                        data.TakeProfit,
+                        RecommendTP ? data.RecommendTakeProfit : data.TakeProfit,
                         data.StopLoss,
                         data.Expiration
                         );

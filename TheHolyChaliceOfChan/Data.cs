@@ -14,6 +14,7 @@ namespace TheHolyChaliceOfChan
         public double Price { get; set; }
         public double StopLoss { get; set; }
         public double TakeProfit { get; set; }
+        public double RecommendTakeProfit { get; set; }
         public bool DoOrder { get; set; }
         public int Expiration { get; set; }
         public string Recommend { get; set; }

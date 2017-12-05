@@ -58,5 +58,29 @@ namespace TheHolyChaliceOfChan.Properties {
                 this["Expiration"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("06:00:00")]
+        public global::System.TimeSpan ExpirationTime {
+            get {
+                return ((global::System.TimeSpan)(this["ExpirationTime"]));
+            }
+            set {
+                this["ExpirationTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RecommendTP {
+            get {
+                return ((bool)(this["RecommendTP"]));
+            }
+            set {
+                this["RecommendTP"] = value;
+            }
+        }
     }
 }
