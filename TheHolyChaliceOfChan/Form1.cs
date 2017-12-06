@@ -53,5 +53,11 @@ namespace TheHolyChaliceOfChan
                 bsMain.ResetBindings(false);
             }
         }
+
+        private void gridData_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+            e.ThrowException = false;
+        }
     }
 }

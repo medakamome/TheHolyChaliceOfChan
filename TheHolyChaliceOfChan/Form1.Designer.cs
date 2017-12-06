@@ -41,6 +41,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cbRecommend = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbBaseLot = new System.Windows.Forms.TextBox();
@@ -50,14 +52,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbOutput = new System.Windows.Forms.TextBox();
             this.gridData = new System.Windows.Forms.DataGridView();
+            this.Recommend = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RecommendTakeProfit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsGrid = new System.Windows.Forms.BindingSource(this.components);
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.btnOutput = new System.Windows.Forms.Button();
             this.fbd = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbRecommend = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.Recommend = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RecommendTakeProfit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.doOrderDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.curPairDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -132,6 +132,25 @@
             this.splitContainer2.SplitterDistance = 231;
             this.splitContainer2.TabIndex = 0;
             // 
+            // textBox2
+            // 
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "ExpirationTimeStr", true));
+            this.textBox2.Location = new System.Drawing.Point(271, 32);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(56, 19);
+            this.textBox2.TabIndex = 8;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // cbRecommend
+            // 
+            this.cbRecommend.AutoSize = true;
+            this.cbRecommend.Location = new System.Drawing.Point(346, 34);
+            this.cbRecommend.Name = "cbRecommend";
+            this.cbRecommend.Size = new System.Drawing.Size(112, 16);
+            this.cbRecommend.TabIndex = 7;
+            this.cbRecommend.Text = "推奨値を使用する";
+            this.cbRecommend.UseVisualStyleBackColor = true;
+            // 
             // textBox1
             // 
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "Expiration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N0"));
@@ -154,7 +173,7 @@
             // 
             // tbBaseLot
             // 
-            this.tbBaseLot.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "BaseLot", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N2"));
+            this.tbBaseLot.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "BaseLot", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
             this.tbBaseLot.Location = new System.Drawing.Point(72, 32);
             this.tbBaseLot.Name = "tbBaseLot";
             this.tbBaseLot.Size = new System.Drawing.Size(45, 19);
@@ -201,7 +220,7 @@
             // 
             // tbOutput
             // 
-            this.tbOutput.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "OutDirectory", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.tbOutput.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "OutDirectory", true));
             this.tbOutput.Location = new System.Drawing.Point(72, 6);
             this.tbOutput.Name = "tbOutput";
             this.tbOutput.Size = new System.Drawing.Size(407, 19);
@@ -211,6 +230,7 @@
             // 
             this.gridData.AllowUserToAddRows = false;
             this.gridData.AllowUserToDeleteRows = false;
+            this.gridData.AllowUserToOrderColumns = true;
             this.gridData.AllowUserToResizeRows = false;
             this.gridData.AutoGenerateColumns = false;
             this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -229,12 +249,38 @@
             this.gridData.DataSource = this.bsGrid;
             this.gridData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridData.Location = new System.Drawing.Point(10, 0);
+            this.gridData.MultiSelect = false;
             this.gridData.Name = "gridData";
             this.gridData.RowHeadersVisible = false;
             this.gridData.RowTemplate.Height = 21;
             this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.gridData.ShowCellErrors = false;
+            this.gridData.ShowCellToolTips = false;
+            this.gridData.ShowEditingIcon = false;
+            this.gridData.ShowRowErrors = false;
             this.gridData.Size = new System.Drawing.Size(607, 186);
             this.gridData.TabIndex = 4;
+            this.gridData.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridData_DataError);
+            // 
+            // Recommend
+            // 
+            this.Recommend.DataPropertyName = "Recommend";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Recommend.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Recommend.HeaderText = "推奨";
+            this.Recommend.Name = "Recommend";
+            this.Recommend.ReadOnly = true;
+            this.Recommend.Width = 40;
+            // 
+            // RecommendTakeProfit
+            // 
+            this.RecommendTakeProfit.DataPropertyName = "RecommendTakeProfit";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "##0.000##";
+            this.RecommendTakeProfit.DefaultCellStyle = dataGridViewCellStyle8;
+            this.RecommendTakeProfit.HeaderText = "推奨T/P";
+            this.RecommendTakeProfit.Name = "RecommendTakeProfit";
+            this.RecommendTakeProfit.Width = 60;
             // 
             // bsGrid
             // 
@@ -264,46 +310,6 @@
             this.btnOutput.Text = "出力";
             this.btnOutput.UseVisualStyleBackColor = true;
             this.btnOutput.Click += new System.EventHandler(this.btnOutput_Click);
-            // 
-            // cbRecommend
-            // 
-            this.cbRecommend.AutoSize = true;
-            this.cbRecommend.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.bsMain, "RecommendTP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.cbRecommend.Location = new System.Drawing.Point(346, 34);
-            this.cbRecommend.Name = "cbRecommend";
-            this.cbRecommend.Size = new System.Drawing.Size(112, 16);
-            this.cbRecommend.TabIndex = 7;
-            this.cbRecommend.Text = "推奨値を使用する";
-            this.cbRecommend.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMain, "ExpirationTimeStr", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox2.Location = new System.Drawing.Point(271, 32);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(56, 19);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // Recommend
-            // 
-            this.Recommend.DataPropertyName = "Recommend";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Recommend.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Recommend.HeaderText = "推奨";
-            this.Recommend.Name = "Recommend";
-            this.Recommend.ReadOnly = true;
-            this.Recommend.Width = 40;
-            // 
-            // RecommendTakeProfit
-            // 
-            this.RecommendTakeProfit.DataPropertyName = "RecommendTakeProfit";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "##0.000##";
-            this.RecommendTakeProfit.DefaultCellStyle = dataGridViewCellStyle8;
-            this.RecommendTakeProfit.HeaderText = "推奨T/P";
-            this.RecommendTakeProfit.Name = "RecommendTakeProfit";
-            this.RecommendTakeProfit.Width = 60;
             // 
             // bsMain
             // 

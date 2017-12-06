@@ -66,6 +66,14 @@ namespace TheHolyChaliceOfChan
             string record = "";
             bool isFirst = true;
             string symbol = "";
+
+            DateTime now = DateTime.Now;
+            TimeSpan nowts = new TimeSpan(now.Hour, now.Minute, now.Second);
+            TimeSpan expiration = nowts >= ExpirationTime ?
+                new TimeSpan(24, 0, 0) - nowts + ExpirationTime :
+                ExpirationTime - nowts;
+            //expiration = expiration.TotalSeconds < 0 ? new TimeSpan(24, 0, 0) - expiration : expiration;
+
             foreach (string line in lines)
             {
                 tmp = line.Trim(' ');
@@ -84,7 +92,7 @@ namespace TheHolyChaliceOfChan
                         {
                             // 解析
                             Debug.WriteLine(record);
-                            DataList.Add(AnalyzeLine(symbol, record));
+                            DataList.Add(AnalyzeLine(symbol, record, expiration));
                             record = tmp;
                             symbol = curpair.Value;
 
@@ -99,10 +107,10 @@ namespace TheHolyChaliceOfChan
             }
             // 最後の
             Debug.WriteLine(record);
-            DataList.Add(AnalyzeLine(symbol, record));
+            DataList.Add(AnalyzeLine(symbol, record, expiration));
         }
 
-        private Data AnalyzeLine(string symbol, string line)
+        private Data AnalyzeLine(string symbol, string line, TimeSpan expiration)
         {
             Data data = new Data();
 
@@ -156,7 +164,8 @@ namespace TheHolyChaliceOfChan
             data.DoOrder = true;
             data.Recommend = line.Contains("本日の") ? "◎" : "";
             //data.Expiration = Expiration * 60;
-            data.Expiration = nowTime <= ExpirationTime ? 0 : 0;
+            //data.Expiration = nowTime <= ExpirationTime ? 0 : 0;
+            data.Expiration = expiration.Hours * 60 * 60 + expiration.Minutes * 60 + expiration.Seconds;
 
             return data;
         }
